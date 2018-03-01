@@ -1,0 +1,2 @@
+# waifubot
+Basic waifubot functionalities
