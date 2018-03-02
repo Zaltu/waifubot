@@ -1,3 +1,6 @@
+COMS = [".com", ".net", ".org", ".io", ".gg"]
+
+
 
 def basicArithmatic(strEquation):
     return eval(strEquation)
@@ -24,13 +27,24 @@ def searchImageSpecific(keywords):
 def openSite(site):
     import subprocess
     search = subprocess.Popen(['firefox', 'https://%s'%site])
-    return "Search launched! Process %s" % search.pid
+    return "Site opened! Process %s" % search.pid
 
 
 def youtubeSearch(keywords):
     import subprocess
     search = subprocess.Popen(['firefox', 'https://www.youtube.com/search?q=%s'%keywords])
     return "Search launched! Process %s" % search.pid
+
+
+def opener(keywords):
+    for com in COMS:
+        if com in keywords:
+            ewOp = keywords.split(" ")
+            for chunk in ewOp:
+                if com in chunk:
+                    site = chunk
+            return openSite(site)
+    #execute() we got a hash problem :thinking:
 
 
 
