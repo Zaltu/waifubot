@@ -1,5 +1,5 @@
 COMS = [".com", ".net", ".org", ".io", ".gg"]
-
+OMIT_WORDS = {"of", "a", "the", "for"}
 
 
 def basicArithmatic(strEquation):
@@ -12,9 +12,9 @@ def searchSpecific(keywords):
     return "Search launched! Process %s" % search.pid
 
 
-def execute(program, keywords=""):
+def execute(program, keywords=None):
     import subprocess
-    search = subprocess.Popen([program, keywords])
+    search = subprocess.Popen([program, keywords] if keywords else [program])
     return "%s launched! Process %s" % (program, search.pid)
 
 
@@ -36,7 +36,7 @@ def youtubeSearch(keywords):
     return "Search launched! Process %s" % search.pid
 
 
-def opener(keywords):
+def opener(keywords, terms=""):
     for com in COMS:
         if com in keywords:
             ewOp = keywords.split(" ")
@@ -44,7 +44,23 @@ def opener(keywords):
                 if com in chunk:
                     site = chunk
             return openSite(site)
-    #execute() we got a hash problem :thinking:
+    command = terms.split(" ")
+    print command
+    try:
+        return execute(command[0], command[1:] or None)
+    except OSError:
+        return "That program isn't in the PATH..."
+
+
+def interface(commandKeyword, command, fullTerms):
+    import re
+    fullTerms = re.sub('[!@#$,:;?]', '', fullTerms)
+    words = set(fullTerms.split(" "))
+    terms = words.difference(set(commandKeyword.split(" "))).difference(OMIT_WORDS)
+    print "Command: %s\nFunction: %s\nKeywords: %s" % (commandKeyword, command, terms)
+    if command is opener:
+        return command(' '.join(terms), ' '.join(fullTerms.split(" ")[fullTerms.split(" ").index(commandKeyword)+1:]))  # This is the cancer :stringmanipulation:
+    return command(' '.join(terms))
 
 
 

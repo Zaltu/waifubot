@@ -1,4 +1,3 @@
-import sys
 from smarts import actions
 
 COMMAND_KEYWORDS = {
@@ -12,12 +11,10 @@ COMMAND_KEYWORDS = {
     "search pictures":actions.searchImageSpecific,
     "search pic":actions.searchImageSpecific,
     "search pics":actions.searchImageSpecific,
-    "open":actions.opener
+    "open":actions.opener,
+    "launch":actions.opener
 }
 
-OMIT_WORDS = {
-    "of", "a", "the", "for"
-}
 
 def textFilter(text):
     words = set(text.split(" "))
@@ -36,11 +33,7 @@ def textFilter(text):
 
     comRet = None
     if command:
-        terms = ' '.join(words.difference(set(command.split(" "))).difference(OMIT_WORDS))
-        if COMMAND_KEYWORDS[command]:
-            comRet = COMMAND_KEYWORDS[command](terms)
-        print "Command: %s\nFunction: %s\nKeywords: %s" % (command, COMMAND_KEYWORDS[command], terms)
-
+        comRet = actions.interface(command, COMMAND_KEYWORDS[command], text)
 
     prin = "Answer :)\n"
     if comRet:
@@ -50,8 +43,8 @@ def textFilter(text):
 
 
 if __name__ == "__main__":
+    import sys
     textFilter(sys.argv[1])
     #textFilter("calculate 4*13/2+1")
     #textFilter("hey, open www.github.com please")
     #textFilter("image search very fast of dog running at incredibly high speed")
-
