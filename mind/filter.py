@@ -12,6 +12,7 @@ COMMAND_KEYWORDS = {
     "search pic":actions.searchImageSpecific,
     "search pics":actions.searchImageSpecific,
     "open":actions.opener,
+    "open up":actions.opener,
     "launch":actions.opener
 }
 
