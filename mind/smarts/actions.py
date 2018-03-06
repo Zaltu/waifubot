@@ -14,8 +14,8 @@ def searchSpecific(keywords):
 
 def execute(program, keywords=None):
     import subprocess
-    search = subprocess.Popen([program, keywords] if keywords else [program])
-    return "%s launched! Process %s" % (program, search.pid)
+    program = subprocess.Popen([program, keywords] if keywords else [program])
+    return "%s launched! Process %s" % (program, program.pid)
 
 
 def searchImageSpecific(keywords):
@@ -26,8 +26,8 @@ def searchImageSpecific(keywords):
 
 def openSite(site):
     import subprocess
-    search = subprocess.Popen(['firefox', 'https://%s'%site])
-    return "Site opened! Process %s" % search.pid
+    browser = subprocess.Popen(['firefox', 'https://%s'%site])
+    return "Site opened! Process %s" % browser.pid
 
 
 def youtubeSearch(keywords):
